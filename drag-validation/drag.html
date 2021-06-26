@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    #code{
+      --width: 400px;
+      --height: 260px;
+      --puzzle-width: 80px;
+      --puzzle-height: 80px;
+      --offset-left: var(--width) * -1;
+      --moved: 0px;
+
+
+      display: block;
+      width: var(--width);
+      height: var(--height);
+      background-color: tomato;
+      background-position: center;
+      position: relative;
+      border-radius: 5px;
+      box-shadow: 0px 2px 4px rgba(0,0,0,.3);
+    }
+
+    #code::before, #code::after{
+      content: '';
+      display: block;
+      width: inherit;
+      height: inherit;
+      background-color: tomato;
+      background-position: inherit;
+      position: absolute;
+
+      clip-path: inset(
+        calc( (var(--height) - var(--puzzle-height)) /2 )
+        var(--puzzle-width)
+        calc( (var(--height) - var(--puzzle-height)) /2 )
+        calc( var(--width) - var(--puzzle-width) * 2 )
+      );
+
+      -webkit-clip-path: inset(
+        calc( (var(--height) - var(--puzzle-height)) /2 )
+        var(--puzzle-width)
+        calc( (var(--height) - var(--puzzle-height)) /2 )
+        calc( var(--width) - var(--puzzle-width) * 2 )
+      );
+
+    }
+
+    #code::after{
+      transform: translateX(
+        calc(var(--width) * -1)
+      );
+    }
+
+    #code::before{
+      background-color: rgba(0,0,0,.6);
+      background-blend-mode: multiply;
+    }
+
+    #handle{
+      width: calc( var(--width) + var(--puzzle-width) *2 );
+      height: 30px;
+      border-radius: 18px;
+      background-color: #eee;
+      position: absolute;
+      bottom: -50px;
+      left: calc( var(--puzzle-width) * 2 * -1);
+
+      box-shadow: inset 0px 0px 12px rgba(0,0,0,.2);
+      border: 3px solid #ccc;
+    }
+
+    #handle span {
+      display: block;
+      width: var(--puzzle-width);
+      height: inherit;
+      border-radius: inherit;
+      background-color: #fff;
+      box-shadow: inset 0px 0px 6px rgba(0,0,0,.25), 0px 2px 4px rgba(0,0,0,.3);
+      position: absolute;
+      cursor: move;
+    }
+  </style>
+</head>
+<body>
+  <div id="code">
+    <div id="handle"><span></span></div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>bg-progress</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    #bar {
+      --width: 450px;
+      --heigh: 40px;
+      --radius: 20px;
+      --progress: 0px;
+
+      width: var(--width);
+      height: var(--heigh);
+      border-radius: var(--radius);
+      border: 2px solid #ccc;
+      background-color: #eee;
+      box-shadow: inset 0px 0px 12px rgba(0, 0, 0, .25);
+    }
+
+    #progress {
+      display: block;
+      height: var(--heigh);
+      width: clamp(0px, var(--progress), var(--width));
+      line-height: var(--heigh);
+      text-align: center;
+      font-weight: bold;
+      border-radius: var(--radius);
+      background: repeating-linear-gradient(-45deg, rgba(135, 206, 235, .8) 0, rgba(135, 206, 235, .8) 25%, rgba(135, 206, 235, 1) 0, rgba(135, 206, 235, 1) 50%);
+      background-size: 40px var(--heigh);
+      box-shadow: inset 0px 0px 6px rgba(135, 206, 235, .8), 0px 4px 6px rgba(0, 0, 0, .25);
+      transition: .25s all ease;
+      animation: panoramic 20s linear infinite;
+
+    }
+
+    @keyframes panoramic {
+      to {
+        background-position: 200% 0;
+      }
+    }
+
+    #try{
+      width: 200px;
+      height: 100px;
+      border: 1px solid blue;
+      background: repeating-linear-gradient(-45deg, rgba(135, 206, 235, .8) 0, rgba(135, 206, 235, .8) 25%, rgba(135, 206, 235, 1) 0, rgba(135, 206, 235, 1) 50%);
+      background-size: 100px 100px;
+      animation: tryframs 20s linear infinite;
+    }
+
+    @keyframes tryframs {
+      to {
+        background-position: 1000% 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="bar"><span id="progress">0%</span></div>
+  <div id="try"></div>
+  <script>
+    const bar = document.querySelector("#bar");
+    const progress = document.querySelector("#progress");
+
+    let i = 0;
+    let timer = setInterval(() => {
+      let mixWidth = bar.clientWidth;
+      if (i <= (mixWidth + 40)) {
+        bar.style.setProperty("--progress", `${i}px`);
+        let percentage = Math.round(i / mixWidth * 100);
+        if (percentage >= 100) {
+          progress.innerHTML = '100%';
+        } else {
+          progress.innerHTML = percentage + '%';
+        }
+
+      } else {
+        clearInterval(timer);
+
+      }
+
+
+      i += 40;
+    }, 1000);
+  </script>
+</body>
+
+</html>
